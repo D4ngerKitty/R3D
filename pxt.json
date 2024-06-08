@@ -4,7 +4,10 @@
     "dependencies": {
         "device": "*",
         "arcade-platformer": "github:microsoft/arcade-platformer#v0.0.10",
-        "Timers": "github:microsoft/arcade-timers#v1.1.0"
+        "Timers": "github:microsoft/arcade-timers#v1.1.0",
+        "BetterSettings": "github:sargedev/bettersettings#2023.5.1",
+        "BetterArrays": "github:sargedev/betterarrays#v1.0.3",
+        "Declutter": "github:sargedev/declutter#6b0626bf1bd2c7d9a70b846031b5226e48ee932a"
     },
     "files": [
         "main.blocks",
