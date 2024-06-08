@@ -1,4 +1,4 @@
-tiles.setCurrentTilemap(tilemap`level2`)
+tiles.setCurrentTilemap(tilemap`testmap`)
 scene.setBackgroundColor(2)
 let mySprite = platformer.create(img`
     . . . . . . . . . . . . . . . . 
