@@ -2,6 +2,24 @@ namespace SpriteKind {
     export const background = SpriteKind.create()
     export const light = SpriteKind.create()
 }
+function makearedline (myImage: Image) {
+    for (let value of tiles.getTilesByType(myImage)) {
+        image2 = myImage.clone()
+        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Bottom))) {
+            image2.drawLine(0, 15, 15, 15, 0)
+        }
+        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Left))) {
+            image2.drawLine(0, 0, 0, 15, 0)
+        }
+        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Right))) {
+            image2.drawLine(15, 0, 15, 15, 0)
+        }
+        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Top))) {
+            image2.drawLine(0, 0, 15, 0, 0)
+        }
+        tiles.setTileAt(value, image2)
+    }
+}
 function the_player () {
     mySprite = platformer.create(img`
         . . . . . . . . . . . . . . . . 
@@ -321,54 +339,14 @@ function the_player () {
     scene.cameraFollowSprite(declutter.get("cam"))
 }
 function load_map () {
-    for (let value of tiles.getTilesByType(assets.tile`myTile3`)) {
-        image2 = assets.tile`myTile3`.clone()
-        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Bottom))) {
-            image2.drawLine(0, 15, 15, 15, 0)
-        }
-        tiles.setTileAt(value, image2)
-    }
-    for (let value of tiles.getTilesByType(assets.tile`myTile4`)) {
-        image2 = assets.tile`myTile4`.clone()
-        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Bottom))) {
-            image2.drawLine(0, 15, 15, 15, 0)
-        }
-        tiles.setTileAt(value, image2)
-    }
-    for (let value of tiles.getTilesByType(assets.tile`myTile6`)) {
-        image2 = assets.tile`myTile6`.clone()
-        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Top))) {
-            image2.drawLine(0, 0, 15, 0, 0)
-        }
-        tiles.setTileAt(value, image2)
-    }
-    for (let value of tiles.getTilesByType(assets.tile`myTile7`)) {
-        image2 = assets.tile`myTile7`.clone()
-        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Top))) {
-            image2.drawLine(0, 0, 15, 0, 0)
-        }
-        tiles.setTileAt(value, image2)
-    }
-    for (let value of tiles.getTilesByType(assets.tile`myTile11`)) {
-        image2 = assets.tile`myTile11`.clone()
-        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Top))) {
-            image2.drawLine(0, 0, 15, 0, 0)
-        }
-        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Bottom))) {
-            image2.drawLine(0, 15, 15, 15, 0)
-        }
-        tiles.setTileAt(value, image2)
-    }
-    for (let value of tiles.getTilesByType(assets.tile`myTile10`)) {
-        image2 = assets.tile`myTile10`.clone()
-        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Top))) {
-            image2.drawLine(0, 0, 15, 0, 0)
-        }
-        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Bottom))) {
-            image2.drawLine(0, 15, 15, 15, 0)
-        }
-        tiles.setTileAt(value, image2)
-    }
+    makearedline(assets.tile`myTile3`)
+    makearedline(assets.tile`myTile12`)
+    makearedline(assets.tile`myTile6`)
+    makearedline(assets.tile`myTile4`)
+    makearedline(assets.tile`myTile7`)
+    makearedline(assets.tile`myTile11`)
+    makearedline(assets.tile`myTile10`)
+    makearedline(assets.tile`myTile14`)
 }
 let lighton = false
 let image2: Image = null
@@ -387,17 +365,17 @@ let ui_1 = sprites.create(img`
     f2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
     f2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
     f2fff222222222222222222222222222222222222222222fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2ff222222ffff222222f22222f2222222f2222222222222ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2ff22222ffffff22222f2222fff222222f222222222ff22ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2ff222ffffffffff222f22222f2f22222f22222222fff22ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2ff22ffffffffffff22222222f22f222222222222fff222ffff2222222222222222222222222222222222222222222222222222222fffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2ff22222ff2f2f22222f22222f22f2222f222222fff2222fff222222222222222222222222222222222222222222222222222222222ffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2ff22222ff2f2f2222fff2222f22f222fff2ff2fff22222fff22fff2f2f2ff2222fff2f2f2fff2ff2ff22222f222f2f2f2ff222ff22ffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2ff22222ffffff22222f22222f22f2222f222ffff222222fff222f22f2f2f22222f2f2f2f22f22f22f2f2222f222f222f2f2f2f2222ffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2ff2222fffff2222222222222f22f222222222ff2222222fff222f22fff2ff2ff2f2f2f2f22f22ff2ff22ff2f2f2f2f2f2f2f22f222ffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2ff222fffffff222222f22222f2f22222f222f2ff222222fff222f22f2f2f22222f2f2f2f22f22f22f2f2222f2f2f2f2f2f2f222f22ffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2ff222fffffff222222f2222fff222222f22f222f222222fff222f22f2f2ff2222fff2fff22f22ff2f2f22222f2f22f2f2ff22ff222ffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2ff222fffffff222222f22222f2222222f2222222222222fff222222222222222222222222222222222222222222222222222222222ffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff222222ffff222222f2222222222222f2222222222222ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff22222ffffff22222f2222222222222f2222222222222ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff222ffffffffff222f2222222222222f2222222222222ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff22ffffffffffff222222222222222222222222222222ffff2222222222222222222222222222222222222222222222222222222fffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff22222ff2f2f22222f2222222222222f2222222222222fff222222222222222222222222222222222222222222222222222222222ffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff22222ff2f2f2222fff22222222222fff222222222222fff22fff2f2f2ff2222fff2f2f2fff2ff2ff22222f222f2f2f2ff222ff22ffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff22222ffffff22222f2222222222222f2222222222222fff222f22f2f2f22222f2f2f2f22f22f22f2f2222f222f222f2f2f2f2222ffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff2222fffff22222222222222222222222222222222222fff222f22fff2ff2ff2f2f2f2f22f22ff2ff22ff2f2f2f2f2f2f2f22f222ffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff222fffffff222222f2222222222222f2222222222222fff222f22f2f2f22222f2f2f2f22f22f22f2f2222f2f2f2f2f2f2f222f22ffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff222fffffff222222f2222222222222f2222222222222fff222f22f2f2ff2222fff2fff22f22ff2f2f22222f2f22f2f2ff22ff222ffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff222fffffff222222f2222222222222f2222222222222fff222222222222222222222222222222222222222222222222222222222ffffffffffffffffffffffffffffffffffffffffffffffffff2f
     f2fff22fffffff222222222222222222222222222222222fffff2222222222222222222222222222222222222222222222222222222fffffffffffffffffffffffffffffffffffffffffffffffffff2f
     f2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
     f22ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff22f
