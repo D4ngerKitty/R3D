@@ -8,7 +8,10 @@
         "BetterSettings": "github:sargedev/bettersettings#2023.5.1",
         "BetterArrays": "github:sargedev/betterarrays#v1.0.3",
         "Declutter": "github:sargedev/declutter#6b0626bf1bd2c7d9a70b846031b5226e48ee932a",
-        "arcade-minimap": "github:microsoft/arcade-minimap#v0.6.1"
+        "arcade-minimap": "github:microsoft/arcade-minimap#v0.6.1",
+        "pxt-lantern": "github:felixtsu/pxt-lantern#v0.2.1",
+        "arcade-tile-util": "github:microsoft/arcade-tile-util#v1.2.0",
+        "arcade-sprite-util": "github:jwunderl/arcade-sprite-util#v0.4.1"
     },
     "files": [
         "main.blocks",

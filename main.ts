@@ -1,5 +1,6 @@
 namespace SpriteKind {
     export const background = SpriteKind.create()
+    export const light = SpriteKind.create()
 }
 function the_player () {
     mySprite = platformer.create(img`
@@ -358,7 +359,18 @@ function load_map () {
         }
         tiles.setTileAt(value, image2)
     }
+    for (let value of tiles.getTilesByType(assets.tile`myTile10`)) {
+        image2 = assets.tile`myTile10`.clone()
+        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Top))) {
+            image2.drawLine(0, 0, 15, 0, 0)
+        }
+        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Bottom))) {
+            image2.drawLine(0, 15, 15, 15, 0)
+        }
+        tiles.setTileAt(value, image2)
+    }
 }
+let lighton = false
 let image2: Image = null
 let mySprite: platformer.PlatformerSprite = null
 let ui_1 = sprites.create(img`
@@ -485,11 +497,62 @@ let ui_1 = sprites.create(img`
     `, SpriteKind.Player)
 ui_1.setFlag(SpriteFlag.Ghost, true)
 ui_1.setFlag(SpriteFlag.RelativeToCamera, true)
+ui_1.z += 34000000000
 tiles.setCurrentTilemap(tilemap`testmap`)
 scene.setBackgroundColor(2)
 the_player()
 load_map()
+multilights.toggleLighting(true)
+multilights.addLightSource(mySprite, 14)
+tileUtil.createSpritesOnTiles(assets.tile`myTile8`, img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.light)
+tileUtil.createSpritesOnTiles(assets.tile`myTile12`, img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.light)
 game.onUpdate(function () {
     declutter.get("cam").x = mySprite.x
     declutter.get("cam").y = mySprite.y + -16
+})
+forever(function () {
+    for (let value of sprites.allOfKind(SpriteKind.light)) {
+        lighton = false
+        for (let lgithvule of spriteutils.getSpritesWithin(SpriteKind.Player, 160, value)) {
+            multilights.addLightSource(value, 12)
+            lighton = true
+        }
+        if (!(lighton)) {
+            multilights.removeLightSource(value)
+        }
+    }
 })
