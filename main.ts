@@ -7,19 +7,19 @@ function the_player () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        . . . . . 7 7 7 7 7 7 . . . . . 
-        . . . . . 7 7 7 7 7 7 . . . . . 
-        . . . . . 7 7 7 7 7 7 . . . . . 
-        . . . . . 7 7 7 7 7 7 . . . . . 
-        . . . . . 7 7 7 7 7 7 . . . . . 
-        . . . . . 7 7 7 7 7 7 . . . . . 
-        . . . . . 7 7 7 7 7 7 . . . . . 
-        . . . . . 7 7 7 7 7 7 . . . . . 
-        . . . . . 7 7 7 7 7 7 . . . . . 
-        . . . . . 7 7 7 7 7 7 . . . . . 
-        . . . . . 7 7 7 7 7 7 . . . . . 
-        . . . . . 7 7 7 7 7 7 . . . . . 
-        . . . . . 7 7 7 7 7 7 . . . . . 
+        . . . . . 2 f f f f 2 . . . . . 
+        . . . . . f f f f f f . . . . . 
+        . . . . . f 2 f f 2 f . . . . . 
+        . . . . . f 2 f f 2 f . . . . . 
+        . . . . . f f f f f f . . . . . 
+        . . . . . f f f f f f . . . . . 
+        . . . . . f f f f f f . . . . . 
+        . . . . . f f f f f f . . . . . 
+        . . . . . f f f f f f . . . . . 
+        . . . . . f f f f f f . . . . . 
+        . . . . . f f f f f f . . . . . 
+        . . . . . f f f f f f . . . . . 
+        . . . . . 2 f f f f 2 . . . . . 
         `, SpriteKind.Player)
     platformer.moveSprite(mySprite, true)
     platformer.loopFrames(
@@ -319,33 +319,74 @@ function the_player () {
         `, SpriteKind.background))
     scene.cameraFollowSprite(declutter.get("cam"))
 }
+function load_map () {
+    for (let value of tiles.getTilesByType(assets.tile`myTile3`)) {
+        image2 = assets.tile`myTile3`.clone()
+        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Bottom))) {
+            image2.drawLine(0, 15, 15, 15, 0)
+        }
+        tiles.setTileAt(value, image2)
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile4`)) {
+        image2 = assets.tile`myTile4`.clone()
+        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Bottom))) {
+            image2.drawLine(0, 15, 15, 15, 0)
+        }
+        tiles.setTileAt(value, image2)
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile6`)) {
+        image2 = assets.tile`myTile6`.clone()
+        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Top))) {
+            image2.drawLine(0, 0, 15, 0, 0)
+        }
+        tiles.setTileAt(value, image2)
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile7`)) {
+        image2 = assets.tile`myTile7`.clone()
+        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Top))) {
+            image2.drawLine(0, 0, 15, 0, 0)
+        }
+        tiles.setTileAt(value, image2)
+    }
+    for (let value of tiles.getTilesByType(assets.tile`myTile11`)) {
+        image2 = assets.tile`myTile11`.clone()
+        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Top))) {
+            image2.drawLine(0, 0, 15, 0, 0)
+        }
+        if (tiles.tileAtLocationIsWall(value.getNeighboringLocation(CollisionDirection.Bottom))) {
+            image2.drawLine(0, 15, 15, 15, 0)
+        }
+        tiles.setTileAt(value, image2)
+    }
+}
+let image2: Image = null
 let mySprite: platformer.PlatformerSprite = null
 let ui_1 = sprites.create(img`
     .ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff.
     ff222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222ff
     f22ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff22f
     f2fff22f22ffff22f22ffff22f22ffff22f22ffff22f22ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2ff2222222ff2222222ff2222222ff2ff2ff2ff2ff2ff2fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff222222222222222222222222222222222222222222ffff2f
-    f2ff2222222ff2222222ff2222222ff2fffff2ff2fffff2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff22ffffffffffffffffffffffffffffffffffffffff22fff2f
-    f2ff2222222ff2222222ff2222222ff2fffff2ff2fffff2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2ffffffffffffffffffffffffffffffffffffffffff2fff2f
-    f2fff22222ffff22222ffff22222ffff2fff2ffff2fff2fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2ffffffffffffffffffffffffffffffffffffffffff2fff2f
-    f2ffff222ffffff222ffffff222ffffff2f2ffffff2f2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2ffffffffffffff2fff2ffff2222fffffffffffffff2fff2f
-    f2fffff2ffffffff2ffffffff2ffffffff2ffffffff2fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2ffffffffffffff2fff2ffff2fff2ffffffffffffff2fff2f
-    f2fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2ffffffffffffff2fff2ffff2fff2ffffffffffffff2fff2f
-    f2fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2ffffffffffffff2fff2ffff2fff2ffffffffffffff2fff2f
-    f2fff222222222222222222222222222222222222222222ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2ffffffffffffff2f2f2ffff2fff2ffffffffffffff2fff2f
-    f2ff222222ffff222222f22222f2222222f2222222222222fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2ffffffffffffff2f2f2ff2f2ff2fffffffffffffff2fff2f
-    f2ff22222ffffff22222f2222fff222222f222222222ff22fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2ffffffffffffff2f2f2ffff222ffffffffffffffff2fff2f
-    f2ff222ffffffffff222f22222f2f22222f22222222fff22fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2ffffffffffffff2f2f2ffff2ffffffffffffffffff2fff2f
-    f2ff22ffffffffffff22222222f22f222222222222fff222ffff2222222222222222222222222222222222222222222222222222222ffff2ffffffffffffff2f2f2ff2f2ffffffffffffffffff2fff2f
-    f2ff22222ff2f2f22222f22222f22f2222f222222fff2222fff222222222222222222222222222222222222222222222222222222222fff2ffffffffffffff2f2f2ff2f2ffffffffffffffffff2fff2f
-    f2ff22222ff2f2f2222fff2222f22f222fff2ff2fff22222fff22fff2f2f2ff2222fff2f2f2fff2ff2ff22222f222f2f2f2ff222ff22fff2ffffffffffffff2f2f2ff2f2ffffffffffffffffff2fff2f
-    f2ff22222ffffff22222f22222f22f2222f222ffff222222fff222f22f2f2f22222f2f2f2f22f22f22f2f2222f222f222f2f2f2f2222fff2ffffffffffffff2f2f2ff2f2ffffffffffffffffff2fff2f
-    f2ff2222fffff2222222222222f22f222222222ff2222222fff222f22fff2ff2ff2f2f2f2f22f22ff2ff22ff2f2f2f2f2f2f2f22f222fff2fffffffffffffff2f2fff2ffffffffffffffffffff2fff2f
-    f2ff222fffffff222222f22222f2f22222f222f2ff222222fff222f22f2f2f22222f2f2f2f22f22f22f2f2222f2f2f2f2f2f2f222f22fff2ffffffffffffffffffffffffffffffffffffffffff2fff2f
-    f2ff222fffffff222222f2222fff222222f22f222f222222fff222f22f2f2ff2222fff2fff22f22ff2f2f22222f2f22f2f2ff22ff222fff2ffffffffffffffffffffffffffffffffffffffffff2fff2f
-    f2ff222fffffff222222f22222f2222222f2222222222222fff222222222222222222222222222222222222222222222222222222222fff22ffffffffffffffffffffffffffffffffffffffff22fff2f
-    f2fff22fffffff222222222222222222222222222222222fffff2222222222222222222222222222222222222222222222222222222fffff222222222222222222222222222222222222222222ffff2f
+    f2ff2222222ff2222222ff2222222ff2ff2ff2ff2ff2ff2fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff2222222ff2222222ff2222222ff2fffff2ff2fffff2fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff2222222ff2222222ff2222222ff2fffff2ff2fffff2fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2fff22222ffff22222ffff22222ffff2fff2ffff2fff2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ffff222ffffff222ffffff222ffffff2f2ffffff2f2fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2fffff2ffffffff2ffffffff2ffffffff2ffffffff2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2fff222222222222222222222222222222222222222222fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff222222ffff222222f22222f2222222f2222222222222ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff22222ffffff22222f2222fff222222f222222222ff22ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff222ffffffffff222f22222f2f22222f22222222fff22ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff22ffffffffffff22222222f22f222222222222fff222ffff2222222222222222222222222222222222222222222222222222222fffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff22222ff2f2f22222f22222f22f2222f222222fff2222fff222222222222222222222222222222222222222222222222222222222ffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff22222ff2f2f2222fff2222f22f222fff2ff2fff22222fff22fff2f2f2ff2222fff2f2f2fff2ff2ff22222f222f2f2f2ff222ff22ffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff22222ffffff22222f22222f22f2222f222ffff222222fff222f22f2f2f22222f2f2f2f22f22f22f2f2222f222f222f2f2f2f2222ffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff2222fffff2222222222222f22f222222222ff2222222fff222f22fff2ff2ff2f2f2f2f22f22ff2ff22ff2f2f2f2f2f2f2f22f222ffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff222fffffff222222f22222f2f22222f222f2ff222222fff222f22f2f2f22222f2f2f2f22f22f22f2f2222f2f2f2f2f2f2f222f22ffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff222fffffff222222f2222fff222222f22f222f222222fff222f22f2f2ff2222fff2fff22f22ff2f2f22222f2f22f2f2ff22ff222ffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff222fffffff222222f22222f2222222f2222222222222fff222222222222222222222222222222222222222222222222222222222ffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2fff22fffffff222222222222222222222222222222222fffff2222222222222222222222222222222222222222222222222222222fffffffffffffffffffffffffffffffffffffffffffffffffff2f
     f2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
     f22ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff22f
     ff222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222ff
@@ -447,6 +488,7 @@ ui_1.setFlag(SpriteFlag.RelativeToCamera, true)
 tiles.setCurrentTilemap(tilemap`testmap`)
 scene.setBackgroundColor(2)
 the_player()
+load_map()
 game.onUpdate(function () {
     declutter.get("cam").x = mySprite.x
     declutter.get("cam").y = mySprite.y + -16
