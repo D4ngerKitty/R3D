@@ -4,7 +4,7 @@ namespace SpriteKind {
     export const eyes = SpriteKind.create()
 }
 function eyelook () {
-    for (let value of sprites.allOfKind(SpriteKind.eyes)) {
+    for (let value of spriteutils.getSpritesWithin(SpriteKind.eyes, 160, mySprite)) {
         angelbetewn = Math.atan2(value.y - mySprite.y, value.x - mySprite.x)
         if (sprites.readDataNumber(value, "eye") == 1) {
             value.setImage(eyelist[(Math.floor(Math.map(angelbetewn, -3.14159, 3.14159, 0, 7)) + 7) % 8].clone())
@@ -762,8 +762,8 @@ let eye: Sprite = null
 let image2: Image = null
 let eyelisttinny: Image[] = []
 let eyelist: Image[] = []
-let mySprite: platformer.PlatformerSprite = null
 let angelbetewn = 0
+let mySprite: platformer.PlatformerSprite = null
 let lightonoff = false
 lightonoff = true
 let ui_1 = sprites.create(img`
