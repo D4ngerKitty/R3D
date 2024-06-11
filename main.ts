@@ -6,12 +6,11 @@ namespace SpriteKind {
 function eyelook () {
     for (let value of sprites.allOfKind(SpriteKind.eyes)) {
         angelbetewn = Math.atan2(value.y - mySprite.y, value.x - mySprite.x)
-        if (sprites.readDataNumber(eye, "eye") == 1) {
-            value.setImage(eyelist[(Math.floor(Math.map(angelbetewn, -3.14159, 3.14159, 0, 7)) + 7) % 8])
-        } else {
-            if (sprites.readDataNumber(eye, "eye") == 2) {
-                value.setImage(eyelist[(Math.floor(Math.map(eyelisttinny, -3.14159, 3.14159, 0, 7)) + 7) % 8])
-            }
+        if (sprites.readDataNumber(value, "eye") == 1) {
+            value.setImage(eyelist[(Math.floor(Math.map(angelbetewn, -3.14159, 3.14159, 0, 7)) + 7) % 8].clone())
+        }
+        if (sprites.readDataNumber(value, "eye") == 2) {
+            value.setImage(eyelisttinny[(Math.floor(Math.map(angelbetewn, -3.14159, 3.14159, 0, 7)) + 7) % 8].clone())
         }
     }
 }
@@ -452,6 +451,23 @@ function load_map () {
     img`
         ...........2222222222...........
         .........22222222222222.........
+        .......2222..........2222.......
+        ......222.22222........222......
+        ....222..2222222.........222....
+        ..2222..222...222.........2222..
+        .222....22.....22...........222.
+        22......22.....22.............22
+        .222....22.....22...........222.
+        ..2222..222...222.........2222..
+        ....222..2222222.........222....
+        ......222.22222........222......
+        .......2222..........2222.......
+        .........22222222222222.........
+        ...........2222222222...........
+        `,
+    img`
+        ...........2222222222...........
+        .........22222222222222.........
         .......22222222......2222.......
         ......2222222222.......222......
         ....222.222...222........222....
@@ -462,23 +478,6 @@ function load_map () {
         ..2222...2222222..........2222..
         ....222...22222..........222....
         ......222..............222......
-        .......2222..........2222.......
-        .........22222222222222.........
-        ...........2222222222...........
-        `,
-    img`
-        ...........2222222222...........
-        .........22222222222222.........
-        .......2222..........2222.......
-        ......222.22222........222......
-        ....222..2222222.........222....
-        ..2222..222...222.........2222..
-        .222....22.....22...........222.
-        22......22.....22.............22
-        .222....22.....22...........222.
-        ..2222..222...222.........2222..
-        ....222..2222222.........222....
-        ......222.22222........222......
         .......2222..........2222.......
         .........22222222222222.........
         ...........2222222222...........
@@ -685,6 +684,12 @@ function load_map () {
         false
         )
         tiles.placeOnTile(eye, value)
+        animation.runMovementAnimation(
+        eye,
+        animation.animationPresets(animation.bobbing),
+        randint(2000, 3000),
+        true
+        )
         tiles.setTileAt(value, assets.tile`myTile`)
     }
     for (let value of tiles.getTilesByType(assets.tile`myTile16`)) {
@@ -700,14 +705,20 @@ function load_map () {
         eye.z += 34000000
         tiles.placeOnTile(eye, value)
         sprites.setDataNumber(eye, "eye", 2)
+        animation.runMovementAnimation(
+        eye,
+        animation.animationPresets(animation.bobbing),
+        randint(2000, 3000),
+        true
+        )
         tiles.setTileAt(value, assets.tile`myTile`)
     }
 }
 let lighton = false
-let image2: Image = null
-let eyelisttinny = 0
-let eyelist: Image[] = []
 let eye: Sprite = null
+let image2: Image = null
+let eyelisttinny: Image[] = []
+let eyelist: Image[] = []
 let angelbetewn = 0
 let mySprite: platformer.PlatformerSprite = null
 let ui_1 = sprites.create(img`
@@ -834,13 +845,14 @@ let ui_1 = sprites.create(img`
     `, SpriteKind.Player)
 ui_1.setFlag(SpriteFlag.Ghost, true)
 ui_1.setFlag(SpriteFlag.RelativeToCamera, true)
+ui_1.setFlag(SpriteFlag.Invisible, false)
 ui_1.z += 34000000000
 tiles.setCurrentTilemap(tilemap`testmap`)
 scene.setBackgroundColor(2)
 the_player()
 load_map()
 multilights.toggleLighting(true)
-multilights.addLightSource(mySprite, 14)
+multilights.addLightSource(mySprite, 6)
 game.onUpdate(function () {
     declutter.get("cam").x = mySprite.x
     declutter.get("cam").y = mySprite.y + -16
