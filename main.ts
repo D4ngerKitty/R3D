@@ -6,7 +6,13 @@ namespace SpriteKind {
 function eyelook () {
     for (let value of sprites.allOfKind(SpriteKind.eyes)) {
         angelbetewn = Math.atan2(value.y - mySprite.y, value.x - mySprite.x)
-        value.setImage(eyelist[(Math.floor(Math.map(angelbetewn, -3.14159, 3.14159, 0, 7)) + 7) % 8])
+        if (sprites.readDataNumber(eye, "eye") == 1) {
+            value.setImage(eyelist[(Math.floor(Math.map(angelbetewn, -3.14159, 3.14159, 0, 7)) + 7) % 8])
+        } else {
+            if (sprites.readDataNumber(eye, "eye") == 2) {
+                value.setImage(eyelist[(Math.floor(Math.map(eyelisttinny, -3.14159, 3.14159, 0, 7)) + 7) % 8])
+            }
+        }
     }
 }
 function makearedline (myImage: Image) {
@@ -546,6 +552,80 @@ function load_map () {
         ...........2222222222...........
         `
     ]
+    eyelisttinny = [
+    img`
+        . . . . . 2 2 2 2 2 2 2 . . . . . 
+        . . . 2 2 . . . . . . . 2 2 . . . 
+        . 2 2 . . . . 2 2 2 . . . . 2 2 . 
+        2 . . . . . 2 . . . 2 . . . . . 2 
+        . 2 2 . . . 2 . . . 2 . . . 2 2 . 
+        . . . 2 2 . 2 . . . 2 . 2 2 . . . 
+        . . . . . 2 2 2 2 2 2 2 . . . . . 
+        `,
+    img`
+        . . . . . 2 2 2 2 2 2 2 . . . . . 
+        . . . 2 2 . . . . . . . 2 2 . . . 
+        . 2 2 . . 2 2 2 . . . . . . 2 2 . 
+        2 . . . 2 . . . 2 . . . . . . . 2 
+        . 2 2 . 2 . . . 2 . . . . . 2 2 . 
+        . . . 2 2 . . . 2 . . . 2 2 . . . 
+        . . . . . 2 2 2 2 2 2 2 . . . . . 
+        `,
+    img`
+        . . . . . 2 2 2 2 2 2 2 . . . . . 
+        . . . 2 2 2 2 2 . . . . 2 2 . . . 
+        . 2 2 . 2 . . . 2 . . . . . 2 2 . 
+        2 . . . 2 . . . 2 . . . . . . . 2 
+        . 2 2 . 2 . . . 2 . . . . . 2 2 . 
+        . . . 2 2 2 2 2 . . . . 2 2 . . . 
+        . . . . . 2 2 2 2 2 2 2 . . . . . 
+        `,
+    img`
+        . . . . . 2 2 2 2 2 2 2 . . . . . 
+        . . . 2 2 . . . 2 . . . 2 2 . . . 
+        . 2 2 . 2 . . . 2 . . . . . 2 2 . 
+        2 . . . 2 . . . 2 . . . . . . . 2 
+        . 2 2 . . 2 2 2 . . . . . . 2 2 . 
+        . . . 2 2 . . . . . . . 2 2 . . . 
+        . . . . . 2 2 2 2 2 2 2 . . . . . 
+        `,
+    img`
+        . . . . . 2 2 2 2 2 2 2 . . . . . 
+        . . . 2 2 . 2 . . . 2 . 2 2 . . . 
+        . 2 2 . . . 2 . . . 2 . . . 2 2 . 
+        2 . . . . . 2 . . . 2 . . . . . 2 
+        . 2 2 . . . . 2 2 2 . . . . 2 2 . 
+        . . . 2 2 . . . . . . . 2 2 . . . 
+        . . . . . 2 2 2 2 2 2 2 . . . . . 
+        `,
+    img`
+        . . . . . 2 2 2 2 2 2 2 . . . . . 
+        . . . 2 2 . . . 2 . . . 2 2 . . . 
+        . 2 2 . . . . . 2 . . . 2 . 2 2 . 
+        2 . . . . . . . 2 . . . 2 . . . 2 
+        . 2 2 . . . . . . 2 2 2 . . 2 2 . 
+        . . . 2 2 . . . . . . . 2 2 . . . 
+        . . . . . 2 2 2 2 2 2 2 . . . . . 
+        `,
+    img`
+        . . . . . 2 2 2 2 2 2 2 . . . . . 
+        . . . 2 2 . . . . 2 2 2 2 2 . . . 
+        . 2 2 . . . . . 2 . . . 2 . 2 2 . 
+        2 . . . . . . . 2 . . . 2 . . . 2 
+        . 2 2 . . . . . 2 . . . 2 . 2 2 . 
+        . . . 2 2 . . . . 2 2 2 2 2 . . . 
+        . . . . . 2 2 2 2 2 2 2 . . . . . 
+        `,
+    img`
+        . . . . . 2 2 2 2 2 2 2 . . . . . 
+        . . . 2 2 . . . . . . . 2 2 . . . 
+        . 2 2 . . . . . . 2 2 2 . . 2 2 . 
+        2 . . . . . . . 2 . . . 2 . . . 2 
+        . 2 2 . . . . . 2 . . . 2 . 2 2 . 
+        . . . 2 2 . . . 2 . . . 2 2 . . . 
+        . . . . . 2 2 2 2 2 2 2 . . . . . 
+        `
+    ]
     for (let value of tiles.getTilesByType(assets.tile`myTile15`)) {
         eye = sprites.create(img`
             ...........2222222222...........
@@ -565,6 +645,7 @@ function load_map () {
             ...........2222222222...........
             `, SpriteKind.eyes)
         eye.z += 34000000
+        sprites.setDataNumber(eye, "eye", 1)
         animation.runImageAnimation(
         eye,
         [img`
@@ -606,11 +687,27 @@ function load_map () {
         tiles.placeOnTile(eye, value)
         tiles.setTileAt(value, assets.tile`myTile`)
     }
+    for (let value of tiles.getTilesByType(assets.tile`myTile16`)) {
+        eye = sprites.create(img`
+            . . . . . 2 2 2 2 2 2 2 . . . . . 
+            . . . 2 2 . . . . . . . 2 2 . . . 
+            . 2 2 . . . . 2 2 2 . . . . 2 2 . 
+            2 . . . . . 2 . . . 2 . . . . . 2 
+            . 2 2 . . . 2 . . . 2 . . . 2 2 . 
+            . . . 2 2 . 2 . . . 2 . 2 2 . . . 
+            . . . . . 2 2 2 2 2 2 2 . . . . . 
+            `, SpriteKind.eyes)
+        eye.z += 34000000
+        tiles.placeOnTile(eye, value)
+        sprites.setDataNumber(eye, "eye", 2)
+        tiles.setTileAt(value, assets.tile`myTile`)
+    }
 }
 let lighton = false
-let eye: Sprite = null
 let image2: Image = null
+let eyelisttinny = 0
 let eyelist: Image[] = []
+let eye: Sprite = null
 let angelbetewn = 0
 let mySprite: platformer.PlatformerSprite = null
 let ui_1 = sprites.create(img`
