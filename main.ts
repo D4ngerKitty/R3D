@@ -3,6 +3,9 @@ namespace SpriteKind {
     export const light = SpriteKind.create()
     export const eyes = SpriteKind.create()
 }
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    platformer.moveSprite(mySprite, true, 100)
+})
 function eyelook () {
     for (let value of spriteutils.getSpritesWithin(SpriteKind.eyes, 160, mySprite)) {
         angelbetewn = Math.atan2(value.y - mySprite.y, value.x - mySprite.x)
@@ -360,6 +363,9 @@ function the_player () {
     multilights.toggleLighting(lightonoff)
     multilights.addLightSource(mySprite, 6)
 }
+controller.B.onEvent(ControllerButtonEvent.Released, function () {
+    platformer.moveSprite(mySprite, true, 60)
+})
 function load_map () {
     tileUtil.createSpritesOnTiles(assets.tile`myTile8`, img`
         . . . . . . . . . . . . . . . . 
