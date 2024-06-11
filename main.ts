@@ -32,6 +32,15 @@ function makearedline (myImage: Image) {
         tiles.setTileAt(value, image2)
     }
 }
+controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (lightonoff) {
+        lightonoff = false
+        multilights.toggleLighting(lightonoff)
+    } else {
+        lightonoff = true
+        multilights.toggleLighting(lightonoff)
+    }
+})
 function the_player () {
     mySprite = platformer.create(img`
         . . . . . . . . . . . . . . . . 
@@ -329,7 +338,6 @@ function the_player () {
     100,
     platformer.rule(platformer.PlatformerSpriteState.FacingRight, platformer.PlatformerSpriteState.Moving, platformer.PlatformerSpriteState.OnGround)
     )
-    tiles.placeOnRandomTile(mySprite, assets.tile`myTile0`)
     declutter.load("cam", sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -349,6 +357,8 @@ function the_player () {
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.background))
     scene.cameraFollowSprite(declutter.get("cam"))
+    multilights.toggleLighting(lightonoff)
+    multilights.addLightSource(mySprite, 6)
 }
 function load_map () {
     tileUtil.createSpritesOnTiles(assets.tile`myTile8`, img`
@@ -405,6 +415,24 @@ function load_map () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.light)
+    tileUtil.createSpritesOnTiles(assets.tile`myTile17`, img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.light)
     makearedline(assets.tile`myTile3`)
     makearedline(assets.tile`myTile12`)
     makearedline(assets.tile`myTile6`)
@@ -412,6 +440,7 @@ function load_map () {
     makearedline(assets.tile`myTile7`)
     makearedline(assets.tile`myTile11`)
     makearedline(assets.tile`myTile10`)
+    makearedline(assets.tile`myTile18`)
     makearedline(assets.tile`myTile14`)
     eyelist = [
     img`
@@ -714,24 +743,40 @@ function load_map () {
         tiles.setTileAt(value, assets.tile`myTile`)
     }
 }
+function loadmap (text2: string, num: number) {
+    if (text2 == "test world") {
+        tiles.setCurrentTilemap(tilemap`testmap`)
+        scene.setBackgroundColor(2)
+        tiles.placeOnRandomTile(mySprite, assets.tile`myTile0`)
+        light_up = 12
+    } else if (text2 == "test world 2") {
+        tiles.setCurrentTilemap(tilemap`level6`)
+        scene.setBackgroundColor(2)
+        tiles.placeOnRandomTile(mySprite, assets.tile`myTile0`)
+    }
+    load_map()
+}
 let lighton = false
+let light_up = 0
 let eye: Sprite = null
 let image2: Image = null
 let eyelisttinny: Image[] = []
 let eyelist: Image[] = []
-let angelbetewn = 0
 let mySprite: platformer.PlatformerSprite = null
+let angelbetewn = 0
+let lightonoff = false
+lightonoff = true
 let ui_1 = sprites.create(img`
     .ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff.
     ff222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222ff
     f22ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff22f
-    f2fff22f22ffff22f22ffff22f22ffff22f22ffff22f22ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2ff2222222ff2222222ff2222222ff2ff2ff2ff2ff2ff2fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2ff2222222ff2222222ff2222222ff2fffff2ff2fffff2fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2ff2222222ff2222222ff2222222ff2fffff2ff2fffff2fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2fff22222ffff22222ffff22222ffff2fff2ffff2fff2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2ffff222ffffff222ffffff222ffffff2f2ffffff2f2fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
-    f2fffff2ffffffff2ffffffff2ffffffff2ffffffff2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2fff22f22ffff22f22ffff22f22ffffaafaaffffaafaaffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff2222222ff2222222ff2222222ffaaaaaaaffaaaaaaafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff2222222ff2222222ff2222222ffaaaaaaaffaaaaaaafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ff2222222ff2222222ff2222222ffaaaaaaaffaaaaaaafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2fff22222ffff22222ffff22222ffffaaaaaffffaaaaaffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2ffff222ffffff222ffffff222ffffffaaaffffffaaafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
+    f2fffff2ffffffff2ffffffff2ffffffffaffffffffaffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
     f2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
     f2ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
     f2fff222222222222222222222222222222222222222222fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2f
@@ -847,12 +892,8 @@ ui_1.setFlag(SpriteFlag.Ghost, true)
 ui_1.setFlag(SpriteFlag.RelativeToCamera, true)
 ui_1.setFlag(SpriteFlag.Invisible, false)
 ui_1.z += 34000000000
-tiles.setCurrentTilemap(tilemap`testmap`)
-scene.setBackgroundColor(2)
 the_player()
-load_map()
-multilights.toggleLighting(true)
-multilights.addLightSource(mySprite, 6)
+loadmap("test world", 1)
 game.onUpdate(function () {
     declutter.get("cam").x = mySprite.x
     declutter.get("cam").y = mySprite.y + -16
