@@ -586,7 +586,7 @@ function loadui () {
         `, SpriteKind.ui)
     ui_1.setFlag(SpriteFlag.Ghost, true)
     ui_1.setFlag(SpriteFlag.RelativeToCamera, true)
-    ui_1.z += 91
+    ui_1.z += 95
     ui2 = sprites.create(img`
         ................................................................................................................................................................
         ................................................................................................................................................................
@@ -711,7 +711,7 @@ function loadui () {
         `, SpriteKind.ui)
     ui2.setFlag(SpriteFlag.Ghost, true)
     ui2.setFlag(SpriteFlag.RelativeToCamera, true)
-    ui2.z += 92
+    ui2.z += 96
     ui3 = sprites.create(img`
         ................................................................................................................................................................
         ................................................................................................................................................................
@@ -836,7 +836,7 @@ function loadui () {
         `, SpriteKind.ui)
     ui3.setFlag(SpriteFlag.Ghost, true)
     ui3.setFlag(SpriteFlag.RelativeToCamera, true)
-    ui3.z += 93
+    ui3.z += 97
     ui4 = sprites.create(img`
         ................................................................................................................................................................
         ................................................................................................................................................................
@@ -961,7 +961,7 @@ function loadui () {
         `, SpriteKind.ui)
     ui4.setFlag(SpriteFlag.Ghost, true)
     ui4.setFlag(SpriteFlag.RelativeToCamera, true)
-    ui4.z += 94
+    ui4.z += 98
 }
 function load_map () {
     tileUtil.createSpritesOnTiles(assets.tile`myTile8`, img`
@@ -1329,7 +1329,7 @@ function load_map () {
             .........22222222222222.........
             ...........2222222222...........
             `, SpriteKind.eyes)
-        eye.z += 34000000
+        eye.z += 94
         sprites.setDataNumber(eye, "eye", 1)
         animation.runImageAnimation(
         eye,
@@ -1388,7 +1388,7 @@ function load_map () {
             . . . 2 2 . 2 . . . 2 . 2 2 . . . 
             . . . . . 2 2 2 2 2 2 2 . . . . . 
             `, SpriteKind.eyes)
-        eye.z += 34000000
+        eye.z += 94
         tiles.placeOnTile(eye, value)
         sprites.setDataNumber(eye, "eye", 2)
         animation.runMovementAnimation(
