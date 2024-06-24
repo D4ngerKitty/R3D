@@ -3,6 +3,7 @@ namespace SpriteKind {
     export const light = SpriteKind.create()
     export const eyes = SpriteKind.create()
     export const ui = SpriteKind.create()
+    export const TV = SpriteKind.create()
 }
 namespace LoopKind {
     export const loop12 = LoopKind.create()
@@ -32,7 +33,7 @@ function load_up_the_chariter (bool: boolean) {
         sprites.setDataBoolean(mySprite, "loading", true)
         platformer.moveSprite(mySprite, false)
         timer.after(100, function () {
-            myTextSprite = fancyText.create("Loading", 0, 2, fancyText.bold_sans_7)
+            myTextSprite = fancyText.create("Loading", 0, 1, fancyText.bold_sans_7)
             myTextSprite.setFlag(SpriteFlag.RelativeToCamera, true)
             myTextSprite.setPosition(78, 106)
             myTextSprite.z += 100
@@ -1414,22 +1415,98 @@ function load_map () {
         )
         tiles.setTileAt(value, assets.tile`myTile`)
     }
+    for (let value of tiles.getTilesByType(assets.tile`myTile28`)) {
+        mySprite2 = sprites.create(img`
+            ................................................................
+            ................................................................
+            .................ff......................ff.....................
+            .................fff....................fff.....................
+            ..................fff..................fff......................
+            ...................fff................fff.......................
+            ....................fff..............fff........................
+            .....................fff............fff.........................
+            ......................fff..........fff..........................
+            .......................fff........fff...........................
+            ........................fff......fff............................
+            .........................fff....fff.............................
+            ..........................fff..fff..............................
+            ...........................ffffff...............................
+            ............................ffff................................
+            .ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff.
+            ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+            ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+            ffffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaffff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaafffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaafaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafffaaafff
+            fffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafff
+            ffffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaffff
+            ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+            ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+            .ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff.
+            .................fff.........ffff.........fff...................
+            ..................fff.......ffffff.......fff....................
+            ...................fff.....fff..fff.....fff.....................
+            ....................fff...fff....fff...fff......................
+            .....................fff.fff......fff.fff.......................
+            ......................fffff........fffff........................
+            .......................fff..........fff.........................
+            ......................fffff........fffff........................
+            .....................fff.fff......fff.fff.......................
+            ....................fff...fff....fff...fff......................
+            ...................fff.....fff..fff.....fff.....................
+            ..................fff.......ffffff.......fff....................
+            .................fff.........ffff.........fff...................
+            `, SpriteKind.TV)
+        mySprite2.ay = 200
+        tiles.placeOnTile(mySprite2, value)
+        tiles.setTileAt(value, assets.tile`transparency16`)
+    }
 }
 function loadmap (text2: string, num: number) {
     if (text2 == "test world") {
         tiles.setCurrentTilemap(tilemap`testmap`)
-        scene.setBackgroundColor(2)
+        scene.setBackgroundColor(1)
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile0`)
         light_up = 12
     } else if (text2 == "test world 2") {
         tiles.setCurrentTilemap(tilemap`level6`)
-        scene.setBackgroundColor(2)
+        scene.setBackgroundColor(1)
         tiles.placeOnRandomTile(mySprite, assets.tile`myTile19`)
+    } else if (text2 == "Showmaster") {
+        scene.setBackgroundColor(1)
+        tiles.setCurrentTilemap(tilemap`level9`)
+        tiles.placeOnRandomTile(mySprite, assets.tile`myTile0`)
     }
     load_map()
 }
 let lighton = false
 let light_up = 0
+let mySprite2: Sprite = null
 let eye: Sprite = null
 let image2: Image = null
 let ui4: Sprite = null
@@ -1444,7 +1521,7 @@ let mySprite: platformer.PlatformerSprite = null
 let lightonoff = false
 lightonoff = true
 the_player()
-loadmap("test world 2", 1)
+loadmap("Showmaster", 1)
 loadui()
 load_up_the_chariter(true)
 game.onUpdate(function () {
@@ -1454,13 +1531,22 @@ game.onUpdate(function () {
 })
 forever(function () {
     pause(randint(100, 4000))
-    music_start(1)
 })
 forever(function () {
     for (let value of sprites.allOfKind(SpriteKind.light)) {
         lighton = false
         for (let lgithvule of spriteutils.getSpritesWithin(SpriteKind.Player, 160, value)) {
             multilights.addLightSource(value, 12)
+            lighton = true
+        }
+        if (!(lighton)) {
+            multilights.removeLightSource(value)
+        }
+    }
+    for (let value of sprites.allOfKind(SpriteKind.TV)) {
+        lighton = false
+        for (let lgithvule of spriteutils.getSpritesWithin(SpriteKind.Player, 160, value)) {
+            multilights.addLightSource(value, 32)
             lighton = true
         }
         if (!(lighton)) {
